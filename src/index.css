@@ -1,0 +1,18 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  --black: #17222D;
+  --white: #ffffff;
+  --white-blue-light: #EFF4F9;
+  --blue-light: #445566;
+  font-family: 'Nunito', sans-serif;
+}
+
+.main {
+  display: flex;
+  flex-flow: column nowrap;
+}
