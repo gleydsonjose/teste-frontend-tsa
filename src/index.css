@@ -7,8 +7,11 @@
 body {
   --black: #17222D;
   --white: #ffffff;
+  --white2: #f6fbff;
   --white-blue-light: #EFF4F9;
+  --gray-blue-light: #879daf;
   --blue-light: #445566;
+  --blue: #1188EE;
   font-family: 'Nunito', sans-serif;
 }
 

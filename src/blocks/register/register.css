@@ -3,6 +3,8 @@
   flex-flow: column nowrap;
   width: 100%;
   align-items: center;
+
+  margin-bottom: 3em;
 }
 
 .register__title-body {
@@ -16,13 +18,14 @@
 .register__title {
   padding: .3em 0;
   width: 100%;
-  max-width: 700px;
+  max-width: 500px;
   font-size: 45pt;
 }
 
 .register__form {
   width: 100%;
-  max-width: 700px;
+  max-width: 500px;
+  margin-top: 3em;
 }
 
 .register__form-first-group {}
@@ -30,11 +33,21 @@
 .register__form-item {
   display: flex;
   flex-flow: column nowrap;
-  margin-bottom: 2px;
+  margin-bottom: 1em;
+}
+
+.register__form-item_mid_width {
+  width: 48%;
+}
+
+.register__form-item-group {
+  display: flex;
+  justify-content: space-between;
 }
 
 .register__label {
   color: var(--blue-light);
+  padding-bottom: .2em;
 }
 
 .register__input {
@@ -42,6 +55,80 @@
   background-color: var(--white-blue-light);
   box-shadow: 0px 2px 2px rgba(187, 204, 221, 0.4);
   border: none;
+  color: var(--gray-blue-light);
+  padding: 1em .8em;
+  border-radius: 4px;
+  font-size: 11pt;
+}
+
+.register__input::placeholder {
+  color: var(--gray-blue-light);
+  font-size: 11pt;
+}
+
+.register__select {
+  display: none;
+}
+
+.register__select-custom {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+}
+
+.register__select-custom-item {
+  background-color: var(--white-blue-light);
+  box-shadow: 0px 2px 2px rgba(187, 204, 221, 0.4);
+  color: var(--gray-blue-light);
+  padding: 0 .8em;
+  height: 3.1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+  font-size: 11pt;
+  cursor: pointer;
+}
+
+.register__select-custom-option {
+  list-style: none;
+  background-color: var(--white2);
   color: var(--blue-light);
+  border: 1px solid var(--white-blue-light);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  font-size: 11pt;
+  z-index: 10;
+  position: absolute;
+  width: 100%;
+  top: 3.15em;
+  height: 140px;
+  overflow: auto;
+}
+
+.register__select-custom-option-item {
+  padding: .3em .8em;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color .1s ease-in-out, color .1s ease-in-out;
+}
+
+.register__select-custom-option-item:hover {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.register__select-custom-option-item_active {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.register__select2 {
+  outline: none;
+  background-color: var(--white-blue-light);
+  box-shadow: 0px 2px 2px rgba(187, 204, 221, 0.4);
+  border: none;
+  color: var(--gray-blue-light);
   padding: 1em;
 }
