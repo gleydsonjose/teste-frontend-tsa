@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from './blocks/navbar/navbar';
 import Register from './blocks/register/register';
+import CustomerList from './blocks/customer-list/customer-list';
+import Footer from './blocks/footer/footer';
 import './index.css';
 
 const App = () => {
@@ -12,8 +14,8 @@ const App = () => {
     case 'register':
       BodyContainer = <Register/>;
       break;
-    case 'userList':
-      //BodyContainer = <UserList/>;
+    case 'customer-list':
+      BodyContainer = <CustomerList/>;
       break;
     default:
       BodyContainer = '';
@@ -30,6 +32,7 @@ const App = () => {
         currentMainMenuItem={currentMainMenuItem}
         changeMainMenuItem={changeMainMenuItem}/>
       {BodyContainer}
+      <Footer/>
     </>
   );
 }

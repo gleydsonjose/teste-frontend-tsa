@@ -20,7 +20,7 @@ const Navbar = ({
   return (
     <nav className="navbar">
       <ul className="navbar__main-menu">
-        <MainMenuItem mainMenuName="userList"
+        <MainMenuItem mainMenuName="customer-list"
           text="Lista" iconClass="fas fa-list"
           currentMainMenuItem={currentMainMenuItem}
           changeMainMenuItem={changeMainMenuItem}/>

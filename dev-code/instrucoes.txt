@@ -1,4 +1,2 @@
  
 https://github.com/thiagodias63/teste-frontend-tsa
-https://servicodados.ibge.gov.br/api/docs/localidades?versao=1#api-Municipios-estadosUFMunicipiosGet
-https://servicodados.ibge.gov.br/api/v1/localidades/estados/26/municipios
