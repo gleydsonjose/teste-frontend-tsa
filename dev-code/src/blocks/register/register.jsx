@@ -4,7 +4,9 @@ import SelectCustom from './components/select-custom';
 import SelectCustomDuoGroup from './components/select-custom-duo-group';
 import './register.css';
 
-const Register = () => {
+const Register = ({
+  customerList, setCustomerList
+}) => {
   const [inputName, setInputName] = useState('');
   const [inputNameError, setInputNameError] = useState(false);
   const [inputEmail, setInputEmail] = useState('');
@@ -38,6 +40,7 @@ const Register = () => {
   const [inputCardNumberError, setInputCardNumberError] = useState(false);
   const [inputSafeCode, setInputSafeCode] = useState('');
   const [inputSafeCodeError, setInputSafeCodeError] = useState(false);
+  const [successMessageStatus, setSuccessMessageStatus] = useState(false);
 
   useEffect(() => {
     // List for states
@@ -164,6 +167,12 @@ const Register = () => {
       setSelectYearError(false);
       setInputCardNumberError(false);
       setInputSafeCodeError(false);
+
+      setInputCardName('');
+      setMonthCurrentOption(monthOptionDefault);
+      setYearCurrentOption(yearOptionDefault);
+      setInputCardNumber('');
+      setInputSafeCode('');
     }
 
     setPaymentForm(radioValue);
@@ -216,85 +225,117 @@ const Register = () => {
   function submitData(event) {
     event.preventDefault();
     const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-    let userData = {};
+    let hasError = false;
 
     if(inputName.length === 0) {
+      hasError = true;
       setInputNameError(true);
     }
 
     if(!regexEmail.test(inputEmail)) {
+      hasError = true;
       setInputEmailError(true);
     }
 
     if(inputCpf.length < 14) {
+      hasError = true;
       setInputCpfError(true);
     }
 
     if(inputAddress.length === 0) {
+      hasError = true;
       setInputAddressError(true);
     }
 
     if(stateCurrentOption.id === 0) {
+      hasError = true;
       setSelectStateError(true);
     }
 
     if(inputCep.length < 10) {
+      hasError = true;
       setInputCepError(true);
     }
 
     if(cityCurrentOption.id === 0) {
+      hasError = true;
       setSelectCityError(true);
     }
 
     if(paymentForm === 'card') {
       if(inputCardName.length === 0) {
+        hasError = true;
         setInputCardNameError(true);
       }
 
       if(monthCurrentOption.id === 0) {
+        hasError = true;
         setSelectMonthError(true);
       }
 
       if(yearCurrentOption.id === 0) {
+        hasError = true;
         setSelectYearError(true);
       }
 
       if(inputCardNumber.length === 0) {
+        hasError = true;
         setInputCardNumberError(true);
       }
 
       if(inputSafeCode.length < 3) {
+        hasError = true;
         setInputSafeCodeError(true);
       }
     }
 
-    /*if(paymentForm === 'card') {
-      if(!inputNameError, !inputEmailError, !inputCpfError,
-        !inputAddressError, !selectStateError, !inputCepError,
-        !selectCityError) {
-        userData = {
-          ...userData,
-          id: 
-        }
-      }
-    } else if(paymentForm === 'boleto') {
-      if(!inputCardNameError, !selectMonthError, !selectYearError,
-        !inputCardNumberError, !inputSafeCodeError) {
-    }*/
+    if(!hasError) {
+      const currentDay = new Date().getDate();
+      const currentYear = new Date().getFullYear();
+      let currentMonth = new Date().getMonth() + 1;
+      currentMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
+      const currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
+      let newCustomerList = customerList.slice();
+      const newCustomerListId = customerList.length;
 
-    console.log(inputName);
-    console.log(inputEmail);
-    console.log(inputCpf);
-    console.log(inputAddress);
-    console.log(inputCep);
-    console.log(stateCurrentOption.nome);
-    console.log(cityCurrentOption.nome);
-    console.log(paymentForm);
-    console.log(inputCardName);
-    console.log(monthCurrentOption.month);
-    console.log(yearCurrentOption.year);
-    console.log(inputCardNumber);
-    console.log(inputSafeCode);
+      newCustomerList.push({
+        id: newCustomerListId,
+        name: inputName,
+        email: inputEmail,
+        cpf: inputCpf,
+        address: inputAddress,
+        cep: inputCep,
+        state: stateCurrentOption.nome,
+        city: cityCurrentOption.nome,
+        paymentForm,
+        cardName: inputCardName,
+        cardMonth: monthCurrentOption.month,
+        cardYear: yearCurrentOption.year,
+        cardNumber: inputCardNumber,
+        safeCode: inputSafeCode,
+        registerDate: currentDate
+      });
+
+      setCustomerList(newCustomerList);
+      setInputName('');
+      setInputEmail('');
+      setInputCpf('');
+      setInputAddress('');
+      setStateCurrentOption(stateOptionDefault);
+      setInputCep('');
+      setCityCurrentOption(cityOptionDefault);
+      setPaymentForm('card');
+      setInputCardName('');
+      setMonthCurrentOption(monthOptionDefault);
+      setYearCurrentOption(yearOptionDefault);
+      setInputCardNumber('');
+      setInputSafeCode('');
+      setSuccessMessageStatus(true);
+    }
+  }
+
+  function changeSuccessMessageStatus() {
+    setSuccessMessageStatus(false);
   }
 
   return (
@@ -307,21 +348,25 @@ const Register = () => {
           <FormItem idAttribute="register-input-name"
             labelText="Nome" inputError={inputNameError}
             changeInput={changeInputName} maxLength="80"
-            errorMessage="Preencha o campo"/>
+            errorMessage="Preencha o campo"
+            inputValue={inputName}/>
           <FormItem idAttribute="register-input-email"
             labelText="Email" inputError={inputEmailError}
             changeInput={changeInputEmail} maxLength="100"
-            errorMessage="Digite um email válido" type="email"/>
+            errorMessage="Digite um email válido" type="email"
+            inputValue={inputEmail}/>
           <FormItem idAttribute="register-input-cpf"
             labelText="CPF" inputError={inputCpfError}
             changeInput={changeInputCpf} maxLength="14"
-            errorMessage="Digite um CPF válido" placeholder="111.111.111-01"/>
+            errorMessage="Digite um CPF válido" placeholder="111.111.111-01"
+            inputValue={inputCpf}/>
           <div className="register__form-item-group">
             <FormItem idAttribute="register-input-address"
               labelText="Endereço" inputError={inputAddressError}
               changeInput={changeInputAddress} maxLength="70"
               errorMessage="Preencha o campo" placeholder="Rua, Número e Bairro"
-              classNameItem="register__form-item register__form-item_mid_width"/>
+              classNameItem="register__form-item register__form-item_mid_width"
+              inputValue={inputAddress}/>
             <SelectCustom idAttribute="register-select-state"
               labelText="Estado" dataList={stateList}
               currentOption={stateCurrentOption}
@@ -335,7 +380,8 @@ const Register = () => {
               labelText="CEP" inputError={inputCepError}
               changeInput={changeInputCep} maxLength="10"
               errorMessage="Digite um CEP válido" placeholder="22.222-000"
-              classNameItem="register__form-item register__form-item_mid_width"/>
+              classNameItem="register__form-item register__form-item_mid_width"
+              inputValue={inputCep}/>
             <SelectCustom idAttribute="register-select-city"
               labelText="Cidade" dataList={cityList}
               currentOption={cityCurrentOption}
@@ -370,7 +416,8 @@ const Register = () => {
                 labelText="Nome no Cartão" inputError={inputCardNameError}
                 changeInput={changeInputCardName} maxLength="80"
                 errorMessage="Preencha o campo" placeholder="Nome impresso no cartão"
-                classNameItem="register__form-item register__form-item_mid_width"/>
+                classNameItem="register__form-item register__form-item_mid_width"
+                inputValue={inputCardName}/>
               <SelectCustomDuoGroup labelText="Data de Expiração"
                 firstDataList={monthList}
                 firstCurrentOption={monthCurrentOption}
@@ -390,18 +437,23 @@ const Register = () => {
                 labelText="Numero do Cartão" inputError={inputCardNumberError}
                 changeInput={changeInputCardNumber} maxLength="19"
                 errorMessage="Digite o número válido" placeholder="5555 5555 5555 5555"
-                classNameItem="register__form-item register__form-item_mid_width"/>
+                classNameItem="register__form-item register__form-item_mid_width"
+                inputValue={inputCardNumber}/>
               <FormItem idAttribute="register-input-safe-code"
                 labelText="Código de Segurança" inputError={inputSafeCodeError}
                 changeInput={changeInputSafeCode} maxLength="3"
                 errorMessage="Digite um código válido" placeholder="XXX"
-                classNameItem="register__form-item register__form-item_mid_width"/>
+                classNameItem="register__form-item register__form-item_mid_width"
+                inputValue={inputSafeCode}/>
             </div>
           </>}
         </div>
         <div className="register__form-footer">
           <p className="register__form-footer-warning">Seu cartão será debitado em R$ 49,00</p>
           <button type="submit" className="register__form-footer-submit" onClick={submitData}>REALIZAR MATRÍCULA</button>
+          {successMessageStatus &&
+            <p className="register__form-footer-success-message"
+              onAnimationEnd={changeSuccessMessageStatus}>Você foi cadastrado com sucesso</p>}
           <p className="register__form-footer-info">Informações seguras e criptografadas</p>
         </div>
       </form>

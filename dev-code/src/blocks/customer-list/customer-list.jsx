@@ -54,6 +54,8 @@ const CustomerList = ({
               </tr>)}
           </tbody>
         </table>
+        {customerListFiltered.length === 0 &&
+          <p className="customer-list__empty-list-warning">Não há usuários cadastrados</p>}
       </div>
     </section>
   );

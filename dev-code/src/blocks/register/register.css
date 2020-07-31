@@ -227,7 +227,46 @@
   background-color: var(--blue-dark);
 }
 
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.register__form-footer-success-message {
+  color: var(--green);
+  margin-bottom: 1em;
+  animation-name: hide;
+  animation-duration: 4s;
+}
+
 .register__form-footer-info {
   color: var(--blue-dark);
   font-size: 10pt;
+}
+
+@media screen and (max-width: 650px) {
+  .register__title {
+    max-width: auto;
+    padding: .3em .2em;
+    text-align: center;
+  }
+  
+  .register__form {
+    max-width: auto;
+    padding: 0 1em;
+  }
+
+  .register__form-item_mid_width {
+    width: 100%;
+  }
+
+  .register__form-item-group {
+    justify-content: flex-start;
+    flex-flow: column nowrap;
+  }
 }
